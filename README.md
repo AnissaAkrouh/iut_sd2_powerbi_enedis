@@ -13,7 +13,7 @@ Ce projet vise à développer une application Power BI permettant d’analyser l
 📖 **Documentation fonctionnelle** : Présentation des fonctionnalités principales de l’application et guide utilisateur.
 🛠️ **Documentation technique** : Explication détaillée de l’architecture du modèle de données, des relations et des transformations appliquées dans Power Query.
 
-🎥 **Lien vers la vidéo explicative de l’application** : [Insérer le lien]
+🎥 **Lien vers la vidéo explicative de l’application** : [[Youtube](https://youtu.be/uzr1hsDpPnY)]
 
 🔗 **Lien de l'application** : [[Power BI App](https://app.powerbi.com/links/sZWAXHwbv6?ctid=a51a6642-5911-4306-a13c-f4731ab9c63f&pbi_source=linkShare)] 
 (*accès via a.sardellitti@univ-lyon2.fr)
