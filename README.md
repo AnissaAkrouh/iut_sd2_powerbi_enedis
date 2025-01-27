@@ -6,7 +6,7 @@ Ce projet vise à développer une application Power BI permettant d’analyser l
 
   **Application Power BI** : Visualisation interactive des données des logements; Filtres dynamiques ; Cartes interactives 
       
-  **Base de données et scripts Power Query**: Script Power Query d'automatisation de récuperation de données via l'API ADEME
+  **Scripts Power Query**: Script Power Query d'automatisation de récuperation de données via l'API ADEME
       
 ## **Documentation du projet**
 
