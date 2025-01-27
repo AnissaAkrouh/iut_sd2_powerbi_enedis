@@ -1,0 +1,65 @@
+let
+    // 1️⃣ Liste des codes postaux du département 84
+    CodesPostaux = {
+        "84240", "84210", "84810", "84400", "84150", "84820", "84570", "84530", 
+        "84110", "84750", "84160", "84740", "84800", "84270", "84600", "84100", 
+        "84190", "84850", "84300", "84250", "84700", "84830", "84390", "84260", 
+        "84290", "84490", "84450", "84330", "84220", "84760", "84440", "84360", 
+        "84420", "84130", "84120", "84580", "84550", "84310", "84170", "84430", 
+        "84560", "84660", "84380", "84340", "84870", "84840", "84480", "84410", 
+        "84320", "84350", "84460", "84230", "84470", "84510", "84200", "84860", 
+        "84500", "84370", "84000", "84140"
+    },
+
+    // 2️⃣ Fonction pour interroger l'API avec un code postal
+    FetchData = (CodePostal as text) =>
+    let
+        BaseUrl = "https://data.ademe.fr/data-fair/api/v1/datasets/dpe-v2-logements-existants/lines?",
+        QueryParams = "size=1000&q=" & CodePostal & "*&q_fields=Code_postal_(BAN)",
+        Url = BaseUrl & QueryParams,
+        Source = try Json.Document(Web.Contents(Url)) otherwise null,
+        Results = if Source = null then {} else Source[results] // Récupérer les résultats
+    in
+        Results,
+
+    // 3️⃣ Boucle pour récupérer les données de chaque code postal
+    DataForAllCodes = List.Transform(CodesPostaux, each FetchData(_)),
+
+    // 4️⃣ Combiner toutes les données en une seule table
+    CombinedData = List.Combine(DataForAllCodes),
+
+    // 5️⃣ Transformer les données en table Power Query
+    FinalTable = Table.FromList(CombinedData, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+
+    // 6️⃣ Sélectionner uniquement les colonnes essentielles
+    #"Colonnes sélectionnées" = Table.ExpandRecordColumn(FinalTable, "Column1", {
+        "Code_postal_(BAN)", "Nom__commune_(BAN)", "Coût_total_5_usages", 
+        "Conso_5_usages_é_finale", "Type_énergie_principale_chauffage", "Adresse_(BAN)",
+        "Coordonnée_cartographique_X_(BAN)", "Coordonnée_cartographique_Y_(BAN)",
+        "Etiquette_DPE", "Emission_GES_5_usages", "Type_bâtiment",
+        "Année_construction", "Surface_habitable_logement", "Méthode_application_DPE"
+    }),
+
+    // 7️⃣ Ajouter une colonne "Type" pour différencier anciens et neufs
+    #"Ajout Type" = Table.AddColumn(#"Colonnes sélectionnées", "Type", each "Anciens"),
+
+    // 8️⃣ Modification des types de données pour éviter les erreurs d'affichage
+    #"Types modifiés" = Table.TransformColumnTypes(#"Ajout Type",{
+        {"Code_postal_(BAN)", type text},
+        {"Nom__commune_(BAN)", type text},
+        {"Coût_total_5_usages", type number},
+        {"Conso_5_usages_é_finale", type number},
+        {"Type_énergie_principale_chauffage", type text},
+        {"Adresse_(BAN)", type text},
+        {"Coordonnée_cartographique_X_(BAN)", type number},
+        {"Coordonnée_cartographique_Y_(BAN)", type number},
+        {"Etiquette_DPE", type text},
+        {"Emission_GES_5_usages", type number},
+        {"Type_bâtiment", type text},
+        {"Année_construction", Int64.Type},
+        {"Surface_habitable_logement", type number},
+        {"Méthode_application_DPE", type text},
+        {"Type", type text}
+    })
+in
+    #"Types modifiés"
