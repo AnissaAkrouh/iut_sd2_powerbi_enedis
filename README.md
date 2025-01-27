@@ -15,4 +15,5 @@ Ce projet vise à développer une application Power BI permettant d’analyser l
 
 🎥 **Lien vers la vidéo explicative de l’application** : [Insérer le lien]
 
-🔗 **Lien de l'application** : [[Power BI App](https://app.powerbi.com/links/sZWAXHwbv6?ctid=a51a6642-5911-4306-a13c-f4731ab9c63f&pbi_source=linkShare)]
+🔗 **Lien de l'application** : [[Power BI App](https://app.powerbi.com/links/sZWAXHwbv6?ctid=a51a6642-5911-4306-a13c-f4731ab9c63f&pbi_source=linkShare)] 
+(*accès via a.sardellitti@univ-lyon2.fr)
